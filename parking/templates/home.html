@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Parking System</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Smart Parking System</h1>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="#">About</a> |
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Available Parking Spots</h2>
+        <ul>
+            {% for spot in parking_spots %}
+                <li>
+                    <div>
+                        <p><strong>{{ spot.location }}</strong></p>
+                        <p>Status: {{ spot.status }}</p>
+                        {% if spot.status == "Available" %}
+                            <a href="{% url 'reserve_parking' spot.id %}" class="reserve-button">Reserve</a>
+                        {% else %}
+                            <span class="occupied">Occupied</span>
+                        {% endif %}
+                    </div>
+                </li>
+            {% empty %}
+                <li>No parking spots available at the moment.</li>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <footer>
+        <p>Smart Parking System &copy; 2024</p>
+    </footer>
+</body>
+</html>
